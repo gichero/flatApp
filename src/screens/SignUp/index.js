@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from "react";
+import React from "react";
 import { Image, StatusBar } from "react-native";
 import {
   Container,
@@ -16,6 +16,7 @@ import {
   Footer
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
+import firebase from "../../firebase/Firebase";
 
 import styles from "./styles";
 import commonColor from "../../theme/variables/commonColor";
@@ -37,7 +38,11 @@ const alphaNumeric = value =>
     ? "Only alphanumeric characters"
     : undefined;
 
-class SignUpForm extends Component {
+class SignUpForm extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {username: '', email: '', password: ''};
+    }
   textInput: any;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
@@ -55,6 +60,7 @@ class SignUpForm extends Component {
           <Input
             ref={c => (this.textInput = c)}
             placeholderTextColor="#FFF"
+            autoCapitalize="none"
             style={styles.input}
             placeholder={
               input.name === "username"
@@ -82,16 +88,28 @@ class SignUpForm extends Component {
     );
   }
   signUp() {
-    if (this.props.valid) {
-      this.props.navigation.goBack();
-    } else {
-      Toast.show({
-        text: "All the fields are compulsory!",
-        duration: 2500,
-        position: "top",
-        textStyle: { textAlign: "center" }
-      });
-    }
+            const{ email, password } = this.state;
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(()=>{
+                this.setState({ error: '', loading: false });
+            })
+            .then(()=>{
+                this.setState({username: '', email: '', password: ''});
+            })
+            .catch(()=>{
+                this.setState({error: 'Email already in use', loading: false});
+            })
+
+        if (this.props.valid) {
+          this.props.navigation.goBack();
+        } else {
+          Toast.show({
+            text: "All the fields are compulsory!",
+            duration: 2500,
+            position: "top",
+            textStyle: { textAlign: "center" }
+          });
+        }
   }
 
   render() {

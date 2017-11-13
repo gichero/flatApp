@@ -15,6 +15,7 @@ import {
   Toast
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
+import firebase from "../../firebase/Firebase";
 
 import styles from "./styles";
 // import commonColor from "../../theme/variables/commonColor";
@@ -40,7 +41,12 @@ const alphaNumeric = value =>
 
 declare type Any = any;
 class LoginForm extends Component {
-  textInput: Any;
+    constructor(props){
+        super(props);
+        this.state = {username: '', email: '', password: '', error: '', loading: false};
+    }
+
+    textInput: Any;
 
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
@@ -79,17 +85,61 @@ class LoginForm extends Component {
   }
 
   login() {
-    if (this.props.valid) {
-      this.props.navigation.navigate("Walkthrough");
-    } else {
-      Toast.show({
-        text: "Enter Valid Username & password!",
-        duration: 2500,
-        position: "top",
-        textStyle: { textAlign: "center" }
-      });
+      if(this.props.valid){
+        const{email, password} = this.state;
+        firebase.auth().signInWithEmailAndPassword(email, password)
+
+              .then(() => {
+                  this.setState({error: '', loading: false});
+                  this.props.navigation.navigate("Walkthrough");
+              })
+              .then(() => {
+                  this.setState({email:'', password: ''});
+              })
+              .catch(()=>{
+                  this.setState({error: 'Authentication Failed', loading: false});
+
+              })
+      }else {
+        Toast.show({
+          text: "Enter Valid Username & password!",
+          duration: 2500,
+          position: "top",
+          textStyle: { textAlign: "center" }
+        });
+      }
     }
+
+    //     if (this.props.valid) {
+    //       this.props.navigation.navigate("Walkthrough");
+    //     } else {
+    //       Toast.show({
+    //         text: "Enter Valid Username & password!",
+    //         duration: 2500,
+    //         position: "top",
+    //         textStyle: { textAlign: "center" }
+    //   });
+    // }
   }
+
+  // login(){
+  //
+  //       this.setState({error: '', loading: true});
+  //
+  //       const{email, password} = this.state;
+  //
+  //       firebase.auth().signInWithEmailAndPassword(email, password)
+  //
+  //       .then(() => {
+  //           this.setState({error: '', loading: false});
+  //       })
+  //       .then(() => {
+  //           this.setState({email:'', password: ''});
+  //       })
+  //       .catch(()=>{
+  //           this.setState({error: 'Authentication Failed', loading: false});
+  //       })
+  //   }
 
   render() {
     const navigation = this.props.navigation;
