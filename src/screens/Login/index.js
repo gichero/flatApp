@@ -15,7 +15,7 @@ import {
   Toast
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
-import firebase from "../../firebase/Firebase";
+import firebase from "../../firebase/Firebase.js";
 
 import styles from "./styles";
 // import commonColor from "../../theme/variables/commonColor";
@@ -85,6 +85,7 @@ class LoginForm extends Component {
   }
 
   login() {
+
       if(this.props.valid){
         const{email, password} = this.state;
         firebase.auth().signInWithEmailAndPassword(email, password)
@@ -120,7 +121,7 @@ class LoginForm extends Component {
     //         textStyle: { textAlign: "center" }
     //   });
     // }
-  }
+  //}
 
   // login(){
   //
@@ -157,12 +158,16 @@ class LoginForm extends Component {
                   name="email"
                   component={this.renderInput}
                   type="email"
+                  value={this.state.email}
+                  onChangeText={email => this.setState({email})}
                   validate={[email, required]}
                 />
                 <Field
                   name="password"
                   component={this.renderInput}
                   type="password"
+                  value={this.state.password}
+                  onChangeText={password => this.setState({password})}
                   validate={[alphaNumeric, minLength8, maxLength15, required]}
                 />
 
@@ -172,7 +177,7 @@ class LoginForm extends Component {
                   block
                   large
                   style={styles.loginBtn}
-                  onPress={() => this.login()}
+                  onPress={this.login.bind(this)}
                 >
                   <Text
                     style={

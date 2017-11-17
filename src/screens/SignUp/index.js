@@ -21,6 +21,7 @@ import firebase from "../../firebase/Firebase";
 import styles from "./styles";
 import commonColor from "../../theme/variables/commonColor";
 
+//const { handleSubmit } = this.props;
 const required = value => (value ? undefined : "Required");
 const maxLength = max => value =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined;
@@ -41,7 +42,12 @@ const alphaNumeric = value =>
 class SignUpForm extends React.Component {
     constructor(props){
         super(props);
-        this.state = {username: '', email: '', password: ''};
+        this.state = {
+            username: '',
+            email: '',
+            password: '',
+            error: ''
+        };
     }
   textInput: any;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
@@ -88,10 +94,14 @@ class SignUpForm extends React.Component {
     );
   }
   signUp() {
-            const{ email, password } = this.state;
+        console.log('In SignUp');
+            const{ username, email, password } = this.state;
+            console.log(username,email,password);
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(()=>{
+                console.log("signUp");
                 this.setState({ error: '', loading: false });
+                this.props.navigation.goBack();
             })
             .then(()=>{
                 this.setState({username: '', email: '', password: ''});
@@ -99,18 +109,7 @@ class SignUpForm extends React.Component {
             .catch(()=>{
                 this.setState({error: 'Email already in use', loading: false});
             })
-
-        if (this.props.valid) {
-          this.props.navigation.goBack();
-        } else {
-          Toast.show({
-            text: "All the fields are compulsory!",
-            duration: 2500,
-            position: "top",
-            textStyle: { textAlign: "center" }
-          });
-        }
-  }
+    }
 
   render() {
     return (
@@ -129,20 +128,23 @@ class SignUpForm extends React.Component {
               <Field
                 name="username"
                 component={this.renderInput}
-                type="text"
+                value={this.state.username}
                 validate={[required, alphaNumeric, minLength5]}
+                onChangeText={(username) => this.setState({username})}
               />
 
               <Field
                 name="email"
                 component={this.renderInput}
-                type="email"
+                value={this.state.email}
                 validate={[email, required]}
+                onChangeText={(email) => this.setState({email})}
               />
               <Field
                 name="password"
                 component={this.renderInput}
-                type="password"
+                value={this.state.password}
+                onChangeText={(password) => this.setState({password})}
                 validate={[alphaNumeric, minLength8, maxLength15, required]}
               />
 
@@ -150,7 +152,7 @@ class SignUpForm extends React.Component {
                 rounded
                 bordered
                 block
-                onPress={() => this.signUp()}
+                onPress={this.signUp.bind(this)}
                 style={styles.signupBtn}
               >
                 <Text style={{ color: "#FFF" }}>Continue</Text>

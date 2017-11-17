@@ -49,3 +49,6 @@ declare module "redux-persist" {
 declare module "react-test-renderer" {
 	declare module.exports: any;
 }
+declare module "firebase" {
+    declare module.exports: any;
+}

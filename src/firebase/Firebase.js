@@ -1,5 +1,4 @@
-import * as firebase from 'firebase';
-
+import firebase from 'firebase';
     const config = {
         apiKey: "AIzaSyD1igByDNK6foguQ4yZNsRA0xFhNfza0YY",
         authDomain: "flata-a8fe4.firebaseapp.com",
