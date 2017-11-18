@@ -111,37 +111,6 @@ class LoginForm extends Component {
       }
     }
 
-    //     if (this.props.valid) {
-    //       this.props.navigation.navigate("Walkthrough");
-    //     } else {
-    //       Toast.show({
-    //         text: "Enter Valid Username & password!",
-    //         duration: 2500,
-    //         position: "top",
-    //         textStyle: { textAlign: "center" }
-    //   });
-    // }
-  //}
-
-  // login(){
-  //
-  //       this.setState({error: '', loading: true});
-  //
-  //       const{email, password} = this.state;
-  //
-  //       firebase.auth().signInWithEmailAndPassword(email, password)
-  //
-  //       .then(() => {
-  //           this.setState({error: '', loading: false});
-  //       })
-  //       .then(() => {
-  //           this.setState({email:'', password: ''});
-  //       })
-  //       .catch(()=>{
-  //           this.setState({error: 'Authentication Failed', loading: false});
-  //       })
-  //   }
-
   render() {
     const navigation = this.props.navigation;
     return (

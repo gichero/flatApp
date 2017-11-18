@@ -96,10 +96,8 @@ class SignUpForm extends React.Component {
   signUp() {
         console.log('In SignUp');
             const{ username, email, password } = this.state;
-            console.log(username,email,password);
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(()=>{
-                console.log("signUp");
                 this.setState({ error: '', loading: false });
                 this.props.navigation.goBack();
             })

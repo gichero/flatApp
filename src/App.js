@@ -19,6 +19,7 @@ import Feedback from "./screens/Feedback/";
 import Profile from "./screens/Profile/";
 import Settings from "./screens/Settings";
 
+
 const Drawer = DrawerNavigator(
   {
     Home: { screen: Home },
