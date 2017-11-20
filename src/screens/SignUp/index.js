@@ -94,6 +94,17 @@ class SignUpForm extends React.Component {
     );
   }
   signUp() {
+      if (this.props.valid) {
+        this.props.navigation.goBack();
+      } else {
+        Toast.show({
+          text: "All the fields are compulsory!",
+          duration: 2500,
+          position: "top",
+          textStyle: { textAlign: "center" }
+        });
+      }
+    }
         console.log('In SignUp');
             const{ username, email, password } = this.state;
             firebase.auth().createUserWithEmailAndPassword(email, password)
