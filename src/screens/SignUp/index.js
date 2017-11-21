@@ -93,19 +93,8 @@ class SignUpForm extends React.Component {
     );
   }
   signUp() {
-    //   if (this.props.valid) {
-    //     this.props.navigation.goBack();
-    //   } else {
-    //     Toast.show({
-    //       text: "All the fields are compulsory!",
-    //       duration: 2500,
-    //       position: "top",
-    //       textStyle: { textAlign: "center" }
-    //     });
-    //   }
-    // }
-        console.log('In SignUp');
-            //onPress={this.signUp.bind(this)}
+
+        if(this.props.valid){
             const{ username, email, password } = this.state;
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(()=>{
@@ -118,6 +107,8 @@ class SignUpForm extends React.Component {
             .catch(()=>{
                 this.setState({error: 'Email already in use', loading: false});
             })
+        }
+
     }
 
   render() {
