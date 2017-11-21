@@ -21,7 +21,6 @@ import firebase from "../../firebase/Firebase";
 import styles from "./styles";
 import commonColor from "../../theme/variables/commonColor";
 
-//const { handleSubmit } = this.props;
 const required = value => (value ? undefined : "Required");
 const maxLength = max => value =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined;
@@ -94,18 +93,19 @@ class SignUpForm extends React.Component {
     );
   }
   signUp() {
-      if (this.props.valid) {
-        this.props.navigation.goBack();
-      } else {
-        Toast.show({
-          text: "All the fields are compulsory!",
-          duration: 2500,
-          position: "top",
-          textStyle: { textAlign: "center" }
-        });
-      }
-    }
+    //   if (this.props.valid) {
+    //     this.props.navigation.goBack();
+    //   } else {
+    //     Toast.show({
+    //       text: "All the fields are compulsory!",
+    //       duration: 2500,
+    //       position: "top",
+    //       textStyle: { textAlign: "center" }
+    //     });
+    //   }
+    // }
         console.log('In SignUp');
+            //onPress={this.signUp.bind(this)}
             const{ username, email, password } = this.state;
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(()=>{
@@ -161,7 +161,7 @@ class SignUpForm extends React.Component {
                 rounded
                 bordered
                 block
-                onPress={this.signUp.bind(this)}
+                onPress={() => this.signUp()}
                 style={styles.signupBtn}
               >
                 <Text style={{ color: "#FFF" }}>Continue</Text>
