@@ -16,7 +16,8 @@ import {
   Footer
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
-import firebase from "../../firebase/Firebase";
+//import firebase from "../../firebase/Firebase";
+import firebase from 'firebase';
 
 import styles from "./styles";
 import commonColor from "../../theme/variables/commonColor";
@@ -30,6 +31,7 @@ const minLength = min => value =>
 const minLength8 = minLength(8);
 const minLength5 = minLength(5);
 const email = value =>
+//regEx
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
     ? "Invalid email address"
     : undefined;
@@ -48,6 +50,18 @@ class SignUpForm extends React.Component {
             error: ''
         };
     }
+
+    componentWillMount(){
+        firebase.initializeApp({
+            apiKey: "AIzaSyD1igByDNK6foguQ4yZNsRA0xFhNfza0YY",
+            authDomain: "flata-a8fe4.firebaseapp.com",
+            databaseURL: "https://flata-a8fe4.firebaseio.com",
+            projectId: "flata-a8fe4",
+            storageBucket: "flata-a8fe4.appspot.com",
+            messagingSenderId: "467861912951"
+        });
+    }
+
   textInput: any;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
