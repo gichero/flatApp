@@ -16,8 +16,8 @@ import {
   Footer
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
-//import firebase from "../../firebase/Firebase";
-import firebase from 'firebase';
+import firebase from "../../firebase/Firebase";
+//import firebase from 'firebase';
 
 import styles from "./styles";
 import commonColor from "../../theme/variables/commonColor";
@@ -49,17 +49,6 @@ class SignUpForm extends React.Component {
             password: '',
             error: ''
         };
-    }
-
-    componentWillMount(){
-        firebase.initializeApp({
-            apiKey: "AIzaSyD1igByDNK6foguQ4yZNsRA0xFhNfza0YY",
-            authDomain: "flata-a8fe4.firebaseapp.com",
-            databaseURL: "https://flata-a8fe4.firebaseio.com",
-            projectId: "flata-a8fe4",
-            storageBucket: "flata-a8fe4.appspot.com",
-            messagingSenderId: "467861912951"
-        });
     }
 
   textInput: any;
