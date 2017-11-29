@@ -97,7 +97,7 @@ class SignUpForm extends React.Component {
   }
   signUp() {
 
-        if(this.props.valid){
+        //if(this.props.valid){
             const{ username, email, password } = this.state;
             firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(()=>{
@@ -110,7 +110,7 @@ class SignUpForm extends React.Component {
             .catch(()=>{
                 this.setState({error: 'Email already in use', loading: false});
             })
-        }
+        //}
 
     }
 
